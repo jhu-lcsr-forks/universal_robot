@@ -14,6 +14,7 @@ import rospy
 import actionlib
 from sensor_msgs.msg import JointState
 from control_msgs.msg import FollowJointTrajectoryAction
+from control_msgs.msg import PointHeadAction
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
 from deserialize import RobotState, RobotMode
@@ -301,6 +302,7 @@ class CommanderTCPHandler(SocketServer.BaseRequestHandler):
                     msg.effort = state[12:18]
                     self.last_joint_states = msg
                     pub_joint_states.publish(msg)
+
                 elif mtype == MSG_QUIT:
                     print "Quitting"
                     raise EOF("Received quit")
@@ -451,10 +453,12 @@ class UR5TrajectoryFollower(object):
         self.following_lock = threading.Lock()
         self.T0 = time.time()
         self.robot = robot
-        self.server = actionlib.ActionServer("follow_joint_trajectory",
-                                             FollowJointTrajectoryAction,
-                                             self.on_goal, self.on_cancel, auto_start=False)
-
+        # self.server = actionlib.ActionServer("follow_joint_trajectory",
+        #                                      FollowJointTrajectoryAction,
+        #                                      self.on_goal, self.on_cancel, auto_start=False)
+        self.server = actionlib.ActionServer("point_head_action",
+                                                PointHeadAction,
+                                                self.on_goal, self.on_cancel, auto_start=False)
         self.goal_handle = None
         self.traj = None
         self.traj_t0 = 0.0
@@ -689,6 +693,7 @@ def main():
     with open(roslib.packages.get_pkg_dir('ur_driver') + '/prog') as fin:
         program = fin.read() % {"driver_hostname": get_my_ip(robot_hostname, PORT)}
     connection = UR5Connection(robot_hostname, PORT, program)
+    print "UR5Connection step complete in driver.py"
     connection.connect()
     connection.send_reset_program()
     

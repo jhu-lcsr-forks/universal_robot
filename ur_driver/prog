@@ -195,7 +195,7 @@ def driverProg():
         set_servo_setpoint(waypoint_id, q, t)
       elif mtype == MSG_MOVEL:
         send_out("Received movel")
-        params_mult = socket_read_binary_integer(1+6+7)
+        params_mult = socket_read_binary_integer(1+6+8)
         if params_mult[0] == 0:
           send_out("Received no parameters for movel message")
         end

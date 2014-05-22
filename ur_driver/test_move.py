@@ -5,6 +5,7 @@ import rospy
 import actionlib
 from control_msgs.msg import *
 from trajectory_msgs.msg import *
+from geometry_msgs.msg import *
 
 JOINT_NAMES = ['shoulder_pan_joint', 'shoulder_lift_joint', 'elbow_joint',
                'wrist_1_joint', 'wrist_2_joint', 'wrist_3_joint']
@@ -87,16 +88,33 @@ def move_interrupt():
         client.cancel_goal()
         raise
 
+def move_amanda():
+    g = PointHeadGoal()
+    g.target = PointStamped()
+    g.min_duration = rospy.Duration(5.0)
+    g.max_velocity = .5
+    g.target.point = [Point(0, -191, 500)]
+    g.pointing_axis = [Vector3(0, -2, 2)]
+
+    client.send_goal(g)
+    try:
+        client.wait_for_result()
+    except KeyboardInterrupt:
+        client.cancel_goal()
+        raise
+
 def main():
     global client
     try:
         rospy.init_node("test_move", anonymous=True, disable_signals=True)
-        client = actionlib.SimpleActionClient('follow_joint_trajectory', FollowJointTrajectoryAction)
+        #client = actionlib.SimpleActionClient('follow_joint_trajectory', FollowJointTrajectoryAction)
+        client = actionlib.SimpleActionClient('point_head_action',PointHeadAction)
         print "Waiting for server..."
         client.wait_for_server()
         print "Connected to server"
         #move1()
-        move_repeated()
+        #move_repeated()
+        move_amanda()
         #move_disordered()
         #move_interrupt()
     except KeyboardInterrupt:

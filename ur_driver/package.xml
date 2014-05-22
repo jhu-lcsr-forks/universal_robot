@@ -48,6 +48,7 @@
   <run_depend>rospy</run_depend>
   <run_depend>sensor_msgs</run_depend>
   <run_depend>trajectory_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
   <run_depend>python-beautifulsoup</run_depend>
 
 
