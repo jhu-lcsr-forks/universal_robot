@@ -248,6 +248,87 @@ center_of_mass = [ [0, -0.02561, 0.00193], [0.2125, 0, 0.11336], [0.11993, 0.0, 
 
   <link name="${prefix}ee_link" />
 
+
+  <link name="${prefix}gripper_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.09" radius="0.065"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="White"/>
+    </visual>
+    <visual>
+      <geometry>
+        <box size="0.15 0.02 0.05"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 -0.01 0.065"/>
+    </visual>
+    <visual>
+      <geometry>
+        <box size="0.03 0.02 0.07"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-0.06 -0.01 0.125"/>
+    </visual>
+    <visual>
+      <geometry>
+        <box size="0.03 0.02 0.07"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0.06 -0.01 0.125"/>
+    </visual>
+
+    <collision>
+      <geometry>
+        <cylinder length="0.09" radius="0.065"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+    <collision>
+      <geometry>
+        <box size="0.15 0.02 0.05"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 -0.01 0.065"/>
+    </collision>
+    <collision>
+      <geometry>
+        <box size="0.03 0.02 0.07"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-0.06 -0.01 0.125"/>
+    </collision>
+    <collision>
+      <geometry>
+        <box size="0.03 0.02 0.07"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0.06 -0.01 0.125"/>
+    </collision>
+  </link>
+  <joint name="${prefix}ee_link_gripper" type="fixed">
+    <parent link="${prefix}ee_link"/>
+    <child link="${prefix}gripper_link"/>
+    <origin rpy="${pi/2} ${pi/2} ${pi/2}" xyz="0.05 0 0"/>
+  </joint>
+
+  <link name="${prefix}marker_link">
+    <visual>
+      <geometry>
+        <box size="0.102 0.045 0.102"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-0.01 0.09 0"/>
+      <material name="LightGrey"/>
+    </visual>
+
+    <collision>
+      <geometry>
+        <box size="0.102 0.045 0.102"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-0.01 0.09 0"/>
+    </collision>
+  </link>
+  <joint name="${prefix}ee_link_marker" type="fixed">
+    <parent link="${prefix}ee_link"/>
+    <child link="${prefix}marker_link"/>
+    <!-- <origin rpy="-1.1579458160307363 -1.558725130964142 -0.47951188571736364" xyz="-0.0131988 0.105739 -0.0014977"/> -->
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
   <!-- Change to fix urdf_parse_error -->
   <!-- <xacro:ur5_arm_transmission prefix="${prefix}" /> -->
   <xacro:ur5_arm_gazebo prefix="${prefix}" />
