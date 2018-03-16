@@ -270,16 +270,18 @@ center_of_mass = [ [0, -0.02561, 0.00193], [0.2125, 0, 0.11336], [0.11993, 0.0, 
       <origin rpy="0 0 0" xyz="0.0 -0.01 0.065"/>
     </visual>
     <visual>
+      <!-- Simplified Robotiq S Model Gripper fingers for faster collision checks, limited joint angles -->
+      <!-- z size = 0.08, z origin = 0.12 is pretty accurate -->
       <geometry>
-        <box size="0.04 0.03 0.055"/>
+        <box size="0.04 0.03 0.09"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="-0.06 -0.01 0.110"/>
+      <origin rpy="0 0 0" xyz="-0.06 -0.01 0.125"/>
     </visual>
     <visual>
       <geometry>
-        <box size="0.04 0.03 0.055"/>
+        <box size="0.04 0.03 0.09"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0.06 -0.01 0.110"/>
+      <origin rpy="0 0 0" xyz="0.06 -0.01 0.125"/>
     </visual>
 
     <collision>
@@ -301,17 +303,19 @@ center_of_mass = [ [0, -0.02561, 0.00193], [0.2125, 0, 0.11336], [0.11993, 0.0, 
       </geometry>
       <origin rpy="0 0 0" xyz="0.0 -0.01 0.065"/>
     </collision>
+
+    <!-- Simplified Robotiq S Model Gripper fingers for faster collision checks, limited joint angles -->
     <collision>
       <geometry>
-        <box size="0.04 0.03 0.055"/>
+        <box size="0.04 0.03 0.09"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="-0.06 -0.01 0.110"/>
+      <origin rpy="0 0 0" xyz="-0.06 -0.01 0.125"/>
     </collision>
     <collision>
       <geometry>
-        <box size="0.04 0.03 0.055"/>
+        <box size="0.04 0.03 0.09"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0.06 -0.01 0.110"/>
+      <origin rpy="0 0 0" xyz="0.06 -0.01 0.125"/>
     </collision>
   </link>
   <joint name="${prefix}ee_link_gripper" type="fixed">
