@@ -5,6 +5,10 @@
   <xacro:include filename="$(find ur_description)/urdf/ur5.gazebo.xacro" />
   <xacro:include filename="$(find ur_description)/urdf/materials.urdf.xacro" />
 <!--
+This is the file typically used to define the simulated robot model utilized while
+costar is run on a real robot.
+-->
+<!--
 DH for UR5:
 a = [0.00000, -0.42500, -0.39225,  0.00000,  0.00000,  0.0000]
 d = [0.089159,  0.00000,  0.00000,  0.10915,  0.09465,  0.0823]
@@ -324,12 +328,18 @@ center_of_mass = [ [0, -0.02561, 0.00193], [0.2125, 0, 0.11336], [0.11993, 0.0, 
     <origin rpy="${pi/2} ${pi/2} ${pi/2}" xyz="0.05 0 -0.01"/>
   </joint>
 
+  <!-- Link and box for the ar tag marker panel on the gripper -->
   <link name="${prefix}marker_link">
     <visual>
       <geometry>
-        <box size="0.102 0.045 0.102"/>
+        <!-- width thickness height -->
+        <box size="0.115 0.045 0.11"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0.02 0.09 0"/>
+      <!-- +x is towards the gripper tip parallel to the marker
+           -y is towards the center of the gripper, normal to the marker
+           +z moves left and right
+           -->
+      <origin rpy="0 0 0" xyz="0.01 0.09 0"/>
       <material name="LightGrey"/>
     </visual>
 
